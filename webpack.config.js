@@ -13,7 +13,7 @@ module.exports = {
       extensions: ['.tsx', '.ts', '.js', '.less', '.css']
     },
     output: {
-        path: path.join(__dirname, './out'),
+        path: path.join(__dirname, './'),
         publicPath: '/assets/dev/',
         filename: '[name].js'
     },

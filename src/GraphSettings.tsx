@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { Component } from 'react';
-import { observer } from 'mobx-react';
+import * as React from "react";
+import { Component } from "react";
+import { observer } from "mobx-react";
 import { GraphModel } from "./GraphModel";
 
-export interface GraphSettingsProps{
+export interface GraphSettingsProps {
     model: GraphModel;
 }
 
 @observer
 export class GraphSettings extends Component<GraphSettingsProps, {}> {
-    render(){
+    render() {
         const { model } = this.props;
         return(
             <table>
@@ -19,13 +19,13 @@ export class GraphSettings extends Component<GraphSettingsProps, {}> {
                             <label>Number of periods:</label>
                         </td>
                         <td>
-                            <input type="number" value={model.periods} onChange={model.setPeriods} />
+                            <input type="number" value={model.periods} onChange={model.setPeriods} min={0} />
                         </td>
                         <td>
                             <label>Frequency [Hz]:</label>
                         </td>
                         <td>
-                            <input type="number" value={model.frequency} onChange={model.setFrequency} />
+                            <input type="number" value={model.frequency} onChange={model.setFrequency} min={0} />
                         </td>
                         <td>
                             <label>Offset [rads]:</label>
@@ -37,11 +37,11 @@ export class GraphSettings extends Component<GraphSettingsProps, {}> {
                             <label>Offset [degrees]:</label>
                         </td>
                         <td>
-                            <input type="number" value={model.offsetDegrees} 
+                            <input type="number" value={model.offsetDegrees}
                                 onChange={model.setOffsetInDegrees} />
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td>
                             <label>Amplitude [V]:</label>
@@ -65,7 +65,7 @@ export class GraphSettings extends Component<GraphSettingsProps, {}> {
                             <label>Number of points:</label>
                         </td>
                         <td>
-                            <input type="number" value={model.limit} onChange={model.setNumberOfPoints} step={10} min={1} />
+                            <input type="number" value={model.limit} onChange={model.setNumberOfPoints} step={10} min={10} />
                         </td>
                     </tr>
                 </tbody>

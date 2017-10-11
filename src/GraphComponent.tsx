@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Component } from 'react';
-import { GraphModel } from './GraphModel';
-import { observer } from 'mobx-react';
-import * as d3 from 'd3';
+import * as React from "react";
+import { Component } from "react";
+import { GraphModel } from "./GraphModel";
+import { observer } from "mobx-react";
+import * as d3 from "d3";
 
 export interface GraphComponentProps {
     model: GraphModel;
@@ -15,7 +15,7 @@ export class GraphComponent extends Component<GraphComponentProps, {}> {
             .x(function (d) { return d[0]; })
             .y(function (d) { return d[1]; })
             .curve(d3.curveCatmullRom);
-        } 
+        }
 
     render() {
         const {model} = this.props;
@@ -30,13 +30,13 @@ export class GraphComponent extends Component<GraphComponentProps, {}> {
                 <path d={lineFnc(points)}
                     stroke="black" strokeWidth={5} strokeLinejoin="round" strokeMiterlimit="8"
                     opacity={0.5} fill="none"/>
-                {points.map((point, index) => 
-                    <circle key={index} r="2.5" fill="black" opacity="0.3" cx={point[0]} cy={point[1]} 
+                {points.map((point, index) =>
+                    <circle key={index} r="2.5" fill="black" opacity="0.3" cx={point[0]} cy={point[1]}
                         onMouseOver={e => model.onPointOver(point)}
-                        onMouseLeave={e => model.onPointOver([0, model.height/2])} 
+                        onMouseLeave={e => model.onPointOver([0, model.height / 2])}
                      />
                 )}
             </g>
-        )
+        );
     }
 }

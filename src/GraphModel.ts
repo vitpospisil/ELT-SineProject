@@ -1,7 +1,7 @@
-import { observable, action } from 'mobx';
+import { observable, action } from "mobx";
 
-export class GraphModel{
-    @observable data: {x:number, y:number}[] = [];
+export class GraphModel {
+    @observable data: {x: number, y: number}[] = [];
     @observable frequency: number = 5;
     @observable periods: number = 3;
     @observable offsetRads: number = 0;
@@ -14,62 +14,73 @@ export class GraphModel{
     @observable mouseY: number;
     width: number = 1000;
     height: number = 400;
-    constructor(){
+    constructor() {
         this.limit = 100;
         this.createSineData();
     }
 
-    getY(x: number){
+    getY(x: number) {
         return this.amplitude * Math.sin(x * this.frequency);
     }
 
-    createSineData(){
+    createSineData() {
         this.data = [];
         const maxNum = this.periods * 2 * Math.PI / this.frequency - this.offsetRads;
         const step = (maxNum + this.offsetRads) / this.limit;
-        console.log("maxNum", maxNum, step, -this.offsetRads);
-        for(let i = -this.offsetRads; i < maxNum; i += step){
+        for (let i = -this.offsetRads; i < maxNum; i += step) {
             this.data.push({x: i, y: this.getY(i)});
         }
     }
 
+    parseToFloat(value: string): number {
+        const num = parseFloat(value);
+        return isNaN(num) ? 0 : num;
+    }
+
+    parseToFloatNotZero(value: string, oldValue: number): number {
+        const num = parseFloat(value);
+        return isNaN(num) || num <= 0 ? oldValue : num;
+    }
+
     @action.bound setFrequency(e: React.ChangeEvent<HTMLInputElement>) {
-        this.frequency = Number(e.target.value);
+        this.frequency = this.parseToFloat(e.target.value);
         this.frequency && this.createSineData();
     }
 
     @action.bound setOffsetInRads(e: React.ChangeEvent<HTMLInputElement>) {
-        this.offsetRads = Number(e.target.value);
-        this.offsetDegrees = Number(e.target.value)*(180/Math.PI);
+        const num = this.parseToFloat(e.target.value);
+        this.offsetRads = num;
+        this.offsetDegrees = num * (180 / Math.PI);
         this.offsetRads && this.createSineData();
     }
     @action.bound setOffsetInDegrees(e: React.ChangeEvent<HTMLInputElement>) {
-        this.offsetRads = (Number(e.target.value) / (180/Math.PI));
-        this.offsetDegrees = Number(e.target.value);
-        this.offsetRads && this.createSineData();
+        const num = this.parseToFloat(e.target.value);
+        this.offsetRads = (num / (180 / Math.PI));
+        this.offsetDegrees = num;
+        !isNaN(this.offsetRads) && this.createSineData();
     }
 
     @action.bound setPeriods(e: React.ChangeEvent<HTMLInputElement>) {
-        this.periods = Number(e.target.value);
-        this.periods && this.createSineData();
+        this.periods = this.parseToFloat(e.target.value);
+        this.createSineData();
     }
 
     @action.bound setZoomX(e: React.ChangeEvent<HTMLInputElement>) {
-        this.zoomX = Number(e.target.value);
+        this.zoomX = this.parseToFloatNotZero(e.target.value, this.zoomX);
     }
 
     @action.bound setZoomY(e: React.ChangeEvent<HTMLInputElement>) {
-        this.zoomY = Number(e.target.value);
+        this.zoomY = this.parseToFloatNotZero(e.target.value, this.zoomY);
     }
 
     @action.bound setAmplitude(e: React.ChangeEvent<HTMLInputElement>) {
-        this.amplitude = Number(e.target.value);
+        this.amplitude = this.parseToFloat(e.target.value);
         this.amplitude && this.createSineData();
     }
 
     @action.bound setNumberOfPoints(e: React.ChangeEvent<HTMLInputElement>) {
-        this.limit = Number(e.target.value);
-        this.limit &&this.createSineData();
+        this.limit = this.parseToFloat(e.target.value);
+        this.limit && this.createSineData();
     }
 
     @action.bound onPointOver(point: number[]) {

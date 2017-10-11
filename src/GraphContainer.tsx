@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { Component } from 'react';
-import { observable, action } from 'mobx';
-import { observer } from 'mobx-react';
+import * as React from "react";
+import { Component } from "react";
+import { observable, action } from "mobx";
+import { observer } from "mobx-react";
 import { GraphModel } from "./GraphModel";
-import { GraphComponent } from './GraphComponent';
-import { HorizontalAxis } from './HorizontalAxis';
-import { VerticalAxis } from './VerticalAxis';
-import { Coordinates } from './CoordinatesComponent';
+import { GraphComponent } from "./GraphComponent";
+import { HorizontalAxis } from "./HorizontalAxis";
+import { VerticalAxis } from "./VerticalAxis";
+import { Coordinates } from "./CoordinatesComponent";
 
-export interface GraphContainerProps{
+export interface GraphContainerProps {
     model: GraphModel;
 }
 
 @observer
-export class GraphContainer extends Component<GraphContainerProps, {}>{
-    render(){
+export class GraphContainer extends Component<GraphContainerProps, {}> {
+    render() {
         const {model} = this.props;
 
         return(
@@ -27,6 +27,6 @@ export class GraphContainer extends Component<GraphContainerProps, {}>{
                 </svg>
                 <Coordinates model={model} />
             </div>
-        )
+        );
     }
 }

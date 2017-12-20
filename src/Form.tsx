@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { Model, OhmPrefixes, FaradPrefixes } from './Model';
+import { Model, OhmPrefixes, HenryPrefixes } from './Model';
 
 export interface FormProps {
    submit: (res: number, resUnit: number, cap: number, capUnit: number) => void;
@@ -23,13 +23,13 @@ export class Form extends Component<FormProps, {}> {
 
     findFaradUnit(text: string): number {
         switch(text) {
-            case "F":
+            case "H":
                 return 1;
-            case "mF":
+            case "mH":
                 return 1/1000;
-            case "μF":
+            case "μH":
                 return 1/1000000;
-            case "nF":
+            case "nH":
                 return 1/1000000000;
         }
     }
@@ -39,13 +39,13 @@ export class Form extends Component<FormProps, {}> {
             <div className="form">
                 <input id="res" type="input" placeholder="resistence" />
                 <select id="resUnit" name="RUnit">
-                    {Object.keys(OhmPrefixes).filter(p => !Number(p) ).map(p => 
+                    {Object.keys(OhmPrefixes).filter(p => !Number(p) && p != "0").map(p => 
                         <option key={p} value={p} >{p.valueOf()}</option>
                     )}
                 </select>
-                <input id="cap" type="input" placeholder="capacity" />
+                <input id="cap" type="input" placeholder="inductivity" />
                 <select id="capUnit" name="RUnit">
-                    {Object.keys(FaradPrefixes).filter(p => !Number(p) ).map(p => 
+                    {Object.keys(HenryPrefixes).filter(p => !Number(p) && p != "0").map(p => 
                         <option key={p} value={p} >{p.valueOf()}</option>
                     )}
                 </select>

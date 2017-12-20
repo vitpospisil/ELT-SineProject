@@ -18,7 +18,7 @@ export class Charts extends Component<ChartsProps, {}> {
                 <LineChart 
                     width={1024}
                     height={600}
-                    margins= {{ top: 50, right: 70, bottom: 60, left: 55 }}	
+                    margins= {{ top: 50, right: 200, bottom: 60, left: 55 }}	
                     hidePoints={true}
                     yLabel="Napětí [× 100%]"
                     xLabel="Čas [ms]"
@@ -27,24 +27,20 @@ export class Charts extends Component<ChartsProps, {}> {
                     xParser={(data)=> (data * 1000)}
                     data={[
                         {			
-                            name: "Nabíjení kondenzátoru",						
+                            name: "Napětí na cívce při sepnutí obvodu",						
                             color: "steelblue", 
                             points: model.chargingPoints 
                         },
                         {					
-                            name: "Vybíjení kondenzátoru",				
+                            name: "Napětí na cívce při rozepnutí obvodu",				
                             color: "red", 
                             points: model.dischargingPoints 
-                        },
-                        {
-                            name: "Tečna k nabíjení",
-                            color: "gray",
-                            points: [{x: 0, y: 0}, {x: model.tau, y: 1}]
                         }]                        
                     }
                 />
-                <span>Hodnota 3 tau: {model.threeTau * 100} %, {model.tau * 3000} ms</span> <br />
-                <span>Hodnota 5 tau: {model.fiveTau * 100} %, {model.tau * 5000} ms</span>
+                <span>Hodnota 1 tau: {(1 / Math.E) * 100} %, {model.tau * 3000} ms</span> <br />
+                <span>Hodnota 3 tau: {Math.pow(Math.E, -3) * 100} %, {model.tau * 3000} ms</span> <br />
+                <span>Hodnota 5 tau: {Math.pow(Math.E, -5) * 100} %, {model.tau * 5000} ms</span>
 
             </div>
         )

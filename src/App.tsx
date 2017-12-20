@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
-import { Model, OhmPrefixes, FaradPrefixes } from './Model';
+import { Model, OhmPrefixes, HenryPrefixes } from './Model';
 import { Form } from './Form';
 import { Charts } from './Charts';
 
